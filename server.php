@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost'; //host
-$port = '9000'; //port
+$port = '9090'; //port
 $null = NULL; //null var
 
 //Create TCP/IP sream socket
@@ -49,9 +49,9 @@ while (true) {
 		{
 			$received_text = unmask($buf); //unmask data
 			$tst_msg = json_decode($received_text); //json decode 
-			$user_name = $tst_msg->name; //sender name
-			$user_message = $tst_msg->message; //message text
-			$user_color = $tst_msg->color; //color
+			$user_name = isset($tst_msg->name) ? $tst_msg->name : ("New User" . time()); //sender name
+			$user_message = isset($tst_msg->message) ? $tst_msg->message : "";
+			$user_color = isset($tst_msg->color) ? $tst_msg->color : ""; //color
 			
 			//prepare data to be sent to client
 			$response_text = mask(json_encode(array('type'=>'usermsg', 'name'=>$user_name, 'message'=>$user_message, 'color'=>$user_color)));
